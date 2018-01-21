@@ -1,0 +1,14 @@
+Dear {{username}},
+
+{%if operation == 'borrowed' or operation == 'returned' %}
+<p>Your have recently {{operation}} this following book via our website:</p>
+
+<p><strong>Book details:</strong> {{title}}, {%if subtitle != ''%}{{subtitle}},{%endif%} by {{authors}}</p>
+
+<p>check our websites for full details.</p>
+
+{%else %}<p>The following book is now overdue: </p>
+
+<p><strong>Book details:</strong> {{title}}, {%if subtitle != ''%}{{subtitle}},{%endif%} by {{authors}}</p>
+
+<p>Please arrange to return this book as soon as possible.</p>{%endif%}

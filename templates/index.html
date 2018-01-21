@@ -1,0 +1,233 @@
+<script>var key = "{{key}}"</script>
+{% extends "layout.html" %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+
+
+{% block main %}
+
+<!--delete/edit form-->
+{% if mycollection%}
+<h4 for="collectionform" class="control-label text-left" ><strong>My Collection</strong></h4>
+<form action="/" method="post" id="collectionform">
+
+<!--my books details in a table-->
+<table class="table table-responsive ">
+  <thead>
+      {%for key in mycollection[0]%}
+        {% if key != 'id'%}
+        <th>{{key.capitalize()}}</th>
+        {%else%}
+        <th>Select</th>
+        {%endif%}
+      {% endfor %}
+  </thead>
+      <tbody>
+        {% for book in mycollection%}
+            <tr>
+              {% for key in book%}
+                {% if key != 'id'%}
+                    {%if key == 'loan period'%}
+                      <td>
+                        {{book.get(key) | days}}
+                      </td>
+                    {%else%}
+                      <td>
+                        {{book.get(key)}}
+                      </td>
+                    {%endif%}
+                {%elif book.get('state') != 'available'%}
+                <td>
+                  <input name="book_id"  type="radio" required disabled value="{{book['id']}}"/>
+                </td>
+                {% else %}
+                <td>
+                  <input name="book_id"  type="radio" required value="{{book['id']}}"/>
+                </td>
+                {% endif%}
+              {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!--delete and edit submit buttons -->
+<div class="row mt-5">
+
+  <!--edit details section-->
+  <div class="col-md-6">
+    <details class="form-group">
+      <summary class=" btn btn-info form-group">
+        Edit Book Details
+      </summary>
+
+        <!--Loan period selection-->
+        <div class="form-group">
+          <label class="control-label" for="lendfor_edit">Lending Period:
+            <small class="form-text text-muted">Specify How long you can lend the book for: </small>
+          </label>
+          <select name="lendfor_edit" class="form-control" >
+            <option value=""></option>
+            <option value="1">Preview - 1 day</option>
+            <option value="10">Short Loan - 10 days</option>
+            <option value="30">Regular Loan - 1 Month</option>
+            <option value="90">Long Loan - 3 Months</option>
+          </select>
+        </div>
+
+        <!--book notes-->
+        <div class="form-group">
+          <label for="booknotes_edit" class="control-label">Notes <small class="form-text text-muted">Input if you have any notes about the book:</small></label>
+          <textarea name="booknotes_edit" class="form-control"></textarea>
+        </div>
+
+        <!--Review selection-->
+        <div class="form-group">
+          <label class="control-label" for="review_edit">Book Review: <small class="form-text text-muted">Select your review: </small></label>
+          <select name="review_edit" class="form-control">
+            <option value=""></option>
+            <option value="1 out of 5">1 out of 5</option>
+            <option value="2 out of 5">2 out of 5</option>
+            <option value="3 out of 5">3 out of 5</option>
+            <option value="4 out of 5">4 out of 5</option>
+            <option value="5 out of 5">5 out of 5</option>
+          </select>
+        </div>
+
+
+        <button  name="edit" type="submit" class=" btn-sm btn-info" formaction="/edit" formmethod="post">Save Changes</button>
+
+    </details>
+  </div>
+
+  <!--delete button-->
+  <div class="col-md-6">
+    <button class=" btn btn-info form-group " name="delete" type="submit" formaction="/delete" formmethod="post">Delete</button>
+  </div>
+
+</div>
+
+</form>
+{% endif %}
+
+
+
+<!--add book form-->
+<form action="/" method="post" id="bookform" data-toggle="validator" class="container form-control" >
+  <h4 for="bookform" class="control-label text-left" ><strong>Add a Book to Your Collection</strong></h4>
+
+  <div class="form-group ">
+  <!--Book details-->
+    <div class="form-group">
+      <label class="control-label" for="q">Book Title:<small class="form-text text-muted">Search for your book title: </small></label>
+      <input id="q" name="book" type="text" autocomplete="off"  required class="form-control"/>
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!--loan period-->
+    <div class="form-group ">
+      <label class="control-label" for="lendfor">Lending Period: <small class="form-text text-muted">Specify How long you can lend the book for: </small></label>
+      <select name="lendfor" class="form-control" required >
+        <option value=""></option>
+        <option value="1">Preview - 1 day</option>
+        <option value="10">Short Loan - 10 days</option>
+        <option value="30">Regular Loan - 1 Month</option>
+        <option value="90">Long Loan - 3 Months</option>
+      </select>
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <!--Notes on the book-->
+    <div class="form-group ">
+      <label for="booknotes" class="control-label">Notes <small class="form-text text-muted">Input if you have any notes about the book:</small></label>
+      <textarea name="booknotes" class="form-control "></textarea>
+    </div>
+
+    <!--review of the book-->
+    <div class="form-group">
+      <label class="control-label" for="review">Book Review: <small class="form-text text-muted">Select your review: </small></label>
+      <select name="review" class="form-control">
+        <option value=""></option>
+        <option value="1 out of 5">1 out of 5</option>
+        <option value="2 out of 5">2 out of 5</option>
+        <option value="3 out of 5">3 out of 5</option>
+        <option value="4 out of 5">4 out of 5</option>
+        <option value="5 out of 5">5 out of 5</option>
+      </select>
+    </div>
+
+    <!--your submit add button-->
+    <button class=" btn btn-info form-control"  name="add" value="add" type="submit">
+    Add
+    </button>
+  </div>
+</form>
+
+
+
+<!--BORROWED COLLCETION--->
+{% if borrowed_collection%}
+<form  id="borrowedform" >
+  <h4 for="borrowedform" class="control-label text-left" ><strong>Borrowed Collection</strong></h4>
+
+  <!--my books details in a table-->
+  <table class="table table-responsive ">
+    <thead >
+        {%for key in borrowed_collection[0]%}
+          {% if key != 'id'%}
+          <th>{{key.capitalize()}}</th>
+          {%else%}
+          <th>Select</th>
+          {%endif%}
+        {% endfor %}
+    </thead>
+        <tbody>
+        {% for book in borrowed_collection%}
+            <tr>
+              {% for key in book%}
+                {% if key != 'id'%}
+                      {%if key== 'loan period'%}
+                          <td>
+                            {{book.get(key) | days}}
+                          </td>
+                      {%else%}
+                        <td>
+                          {{book.get(key)}}
+                        </td>
+                      {%endif%}
+                {%else%}
+                <td>
+                  <input name="book_id"  type="radio" required value="{{book['id']}}"/>
+                </td>
+                {% endif%}
+              {% endfor %}
+            </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  <div class="row mt-5">
+
+        <div class="col-md-6">
+
+          <label class="mr-4"><strong>Time to dispatch the book: </strong></label>
+
+          <select name="return_date" class="form-control" required>
+            <option value=""></option>
+            <option value=1>Within tomorrow</option>
+            <option value=2>Within 2 days</option>
+            <option value=3>Within 3 days</option>
+          </select>
+          <div class="help-block with-errors"></div>
+        </div>
+
+        <div class="col-md-6">
+          <button class=" btn btn-info form-group" name="return" type="submit" formaction="/Return" formmethod="post">return</button>
+        </div>
+  </div>
+</form>
+
+{%endif%}
+{% endblock %}

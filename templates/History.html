@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{%block title%}
+  history
+{%endblock%}
+
+
+{%block main%}
+
+
+<div>
+  <h4 for="Inrequests_history" class="control-label text-left" ><strong>Incoming Requests History</strong></h4>
+  {%if approved_reqs%}
+  <table class="table table-responsive" id="Inrequests_history">
+    <thead>
+
+      <th>Book details</th>
+      <th>Request Type</th>
+      <th>User</th>
+      <th>Request time</th>
+      <th>Approval time</th>
+      <th>Delivery on</th>
+    </thead>
+    <tbody>
+      {%for row in approved_reqs%}
+        <tr>
+          <td>{{row['title']}}, {%if row['subtitle']%}{{row['subtitle']}},{%endif%}  {{row['authors']}}</td>
+        {%for key in row%}
+        {%if key != 'title' and key != 'subtitle' and key != 'authors'%}
+          <td>
+          {{row.get(key)}}
+        </td>
+        {%endif%}
+        {%endfor%}
+      </tr>
+      {%endfor%}
+    </tbody>
+</table>
+{%else%}
+<small class="text-muted "><u>No history of approved incoming borrow or return requests.</u></small></div>
+{%endif%}
+</div>
+
+<!--your requests-->
+<div>
+  <h4 for="your_requests_history" class="control-label text-left" ><strong>Your Requests History</strong></h4>
+  {%if your_reqs%}
+  <table class="table table-responsive" id="your_requests_history">
+    <thead>
+
+      <th>Book details</th>
+      <th>Request Type</th>
+      <th>Owner</th>
+      <th>Request time</th>
+      <th>Approval time</th>
+      <th>Delivery on</th>
+    </thead>
+      <tbody>
+        {%for row in your_reqs%}
+        <tr>
+          <td>
+            {{row['title']}}, {%if row['subtitle']%}{{row['subtitle']}},{%endif%}  {{row['authors']}}
+          </td>
+          {%for key in row%}
+          {%if key != 'title' and key != 'subtitle' and key != 'authors'%}
+            <td>{{row.get(key)}}</td>
+            {%endif%}
+          {%endfor%}
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+{%else%}
+<small class="text-muted "><u>No history of approved borrow or return requests.</u></small></div>
+{%endif%}
+</div>
+
+{%endblock%}

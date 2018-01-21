@@ -1,0 +1,174 @@
+html, body
+{
+    /*margin-left: .75rem;
+    margin-right: .75rem;*/
+    font-family:  'Raleway', sans-serif;
+    background-color: #F7F7F9;
+}
+
+
+
+nav .navbar-brand
+{
+    margin-left: 1rem;
+    margin-right: 0.75rem;
+    font-size: xx-large;
+    color: rgb(255, 82, 82);
+}
+
+button.navbar-toggler
+{
+    border-color: rgb(255, 82, 82);
+}
+.navbar-toggler-icon
+{
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,82,82, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+nav .nav-item a
+{
+  color: rgb(255, 82, 82);
+}
+
+nav
+{
+    background-color: #563d7c;
+}
+
+.btn.btn-info
+{
+  background-color: rgb(255, 82, 82);
+  border-color: rgb(255, 82, 82);
+}
+
+
+.btn-sm.btn-info
+{
+  background-color: rgb(255, 82, 82);
+  border-color: rgb(255, 82, 82);
+}
+
+main
+{
+    /*centers content*/
+    margin-top: 3rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+
+}
+main .form-control
+{
+    display: inline-block ;
+    width: auto;
+}
+
+
+
+h4
+{
+    padding: 20px;
+    font-weight: solid;
+    color: rgb(255, 82, 82);
+
+}
+
+h5
+{
+    padding: 20px;
+    font-weight: solid;
+    color: rgb(255, 82, 82);
+
+}
+table > thead> tr >  th
+{
+    /*background-color: #17a2b8;*/
+    font-size: 1.1rem;
+    font-weight: bolder;
+    color: #563d7c;
+}
+
+table{
+
+  border-color: #563d7c;
+  max-height: 30rem;
+  overflow-y: scroll;
+}
+
+
+
+form.form-control
+{
+    border-color: lavender;
+    color: rgb(255, 82, 82);
+    font-weight: bold;
+    width: 1000px;
+
+}
+.form-group label
+{
+
+    margin-bottom:0;
+}
+
+
+label{
+  color: #563d7c;
+}
+
+
+
+form{
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+details
+{
+    display: inline-block;
+    text-align: left;
+}
+
+/* Stylize text box */
+#q, #bq
+{
+    /* Override typeahead.js's transparent background */
+    background-color: #ffffff !important;
+
+    /* Text box's width */
+    width: 500px;
+}
+
+
+
+
+.help-block.with-errors
+{
+    color: darkred;
+}
+.tt-menu
+{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 1px;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 500px;
+}
+.tt-suggestion.tt-cursor {
+    background-color: #0097cf;
+    color: #fff;
+    cursor: pointer;
+}
+.tt-suggestion {
+    color: black;
+    margin: 0;
+    padding: 6px 12px;
+}
+.empty-message {
+    margin: 0;
+    font-weight: bold;
+    background-color: #fff;
+    color:#8B0000;
+    padding: 6px 12px;
+}

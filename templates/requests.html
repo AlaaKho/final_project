@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+
+{%block title%}
+    Requests
+{%endblock%}
+
+{%block main%}
+
+<!--pending requests-->
+<div class="form-group ">
+<h5 for="inrequests" class="control-label text-left" ><strong>Incoming Borrow Requests</strong></h5>
+
+{%if in_rows%}
+<form action="/requests" method="post" class="container mb-5">
+  <table class="table table-responsive" id="inrequests">
+
+    <thead>
+      <th>Select</th>
+      <th>Book details</th>
+      <th>User</th>
+      <th>Book state</th>
+      <th>Request Time</th>
+      <th>Request State</th>
+    </thead>
+      {%for row in in_rows%}
+
+        <tr>
+          <td>
+            <input name="request_id"  required type="radio"  value="{{row['id']}}"/>
+          </td>
+          <td>{{row['title']}}, {%if row['subtitle']%}{{row['subtitle']}},{%endif%} {%if row['authors']%}{{row['authors']}},{%endif%} {{row['publishedDate']}}</td>
+          {%for key in row%}
+            {%if key != 'title' and key != 'subtitle' and key != 'authors' and key != 'publishedDate' and key!='id'%}
+                <td>{{row.get(key)}}</td>
+            {%endif%}
+          {%endfor%}
+        </tr>
+        <tr>
+          <td colspan="7"></td>
+        </tr>
+      {%endfor%}
+      <tr class="text-center">
+        <td colspan="2"><label class="mr-2"><strong>Time to dispatch the book:<strong></label>
+          <select name="dispatch_date" class="form-control" required>
+            <option value=""></option>
+            <option value=1>Within tomorrow</option>
+            <option value=2>Within 2 days</option>
+            <option value=3>Within 3 days</option>
+          </select>
+          <div class="help-block with-errors"></div>
+        </td>
+        <td colspan="2"><button name="approve" type="submit"  value="approve" class=" btn btn-info">Approve</button></td>
+      </tr>
+</table>
+</form>
+{%else%}
+  <small class="text-muted form-group "><u>No pending borrow requests</u></small> </div>
+{%endif%}
+
+
+
+
+<!--return requests-->
+
+<div class="form-group ">
+<h5 for="return_inrequests" class="control-label text-left" ><strong>Incoming Return Requests</strong></h5>
+{%if rn_rows%}
+<form action="/requests" method="post" class="container mb-5">
+  <table class="table table-responsive" id="return_inrequests">
+
+    <thead>
+      <th>Select</th>
+      <th>Book details</th>
+      <th>User</th>
+      <th>Request Time</th>
+      <th>Request State</th>
+      <th>Return Date</th>
+    </thead>
+    {%for row in rn_rows%}
+      <tr>
+        <td><input name="request_id"  type="radio" required  value="{{row['id']}}"/></td>
+        <td>{{row['title']}}, {%if row['subtitle']%}{{row['subtitle']}},{%endif%} {%if row['authors']%}{{row['authors']}},{%endif%} {{row['publishedDate']}}</td>
+        {%for key in row%}
+          {%if key != 'title' and key != 'subtitle' and key != 'authors' and key !='publishedDate' and key!='id'%}
+            <td>{{row.get(key)}}</td>
+          {%endif%}
+        {%endfor%}
+      </tr>
+    {%endfor%}
+</table>
+
+  <button name="confirm" type="submit" value="confirm" class=" btn-sm btn-info">Confirm return</button>
+</form>
+{%else%}
+  <small class="text-muted"><u>No pending return-confirmation requests</u></small></div>
+{%endif%}
+
+
+
+
+<!--your own pending return/ borrow requests-->
+<div class="form-group ">
+  <h5 for="outrequests" class="control-label text-left" ><strong>Your Requests</strong></h5>
+{%if out_rows%}
+<form action="/requests" method="post" class="container mb-5">
+  <table class="table table-responsive" id="outrequests">
+    <thead>
+      <th>Select</th>
+      <th>Book details</th>
+      <th>Owner</th>
+      <th>Request Type</th>
+      <th>Loan Period</th>
+      <th>Request Time</th>
+      <th>Request State</th>
+      <th>Delivery on</th>
+    </thead>
+      {%for row in out_rows%}
+        <tr>
+          <td>
+            <input name="request_id"  type="radio" required value="{{row['id']}}"/>
+          </td>
+          <td>{{row['title']}}, {%if row['subtitle']%}{{row['subtitle']}},{%endif%} {%if row['authors']%}{{row['authors']}},{%endif%} {{row['publishedDate']}}</td>
+          {%for key in row%}
+            {%if key != 'title' and key != 'subtitle' and key != 'authors' and key !='publishedDate' and key!='id'%}
+                {%if key == 'loan period'%}
+                  <td>{{row.get(key) | days}}</td>
+                {%else%}
+                <td>{{row.get(key)}}</td>
+                {%endif%}
+            {%endif%}
+          {%endfor%}
+        </tr>
+      {%endfor%}
+</table>
+  <button name="cancel" type="submit"  value="cancel" class=" btn-sm btn-info">Cancel request</button>
+
+</div>
+</form>
+{%else%}
+  <small class="text-muted"><u>You don't have pending borrow or return requests</u></small></div>
+{%endif%}
+{%endblock%}
