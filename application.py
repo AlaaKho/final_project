@@ -53,7 +53,7 @@ Session(app)
 mail = Mail(app)
 
 # use sqlite and open up the intended database
-db = SQL("sqlite:///inlight.db")
+db = SQL("postgres://kkagkqrhekumbe:a5f782cf297a70591f61632da7a331ae56a2ddc12198e0f122945bbf3d5e46fb@ec2-54-221-198-206.compute-1.amazonaws.com:5432/daoc0mqahmfnf3")
 # declare a token seralizer
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
@@ -629,7 +629,9 @@ def forgot_password():
         # generate the unique token
         token = ts.dumps(request.form.get("email"), salt="password_reset_key")
         # generate the url
-        url_unique = "http://ide50-alaataham.cs50.io:8080" + url_for("change_password") + token
+        #url_unique = "http://ide50-alaataham.cs50.io:8080" + url_for("change_password") + token
+
+        url_unique = "https://bookstallsite50.herokuapp.com" + url_for("change_password") + token
 
         # prepare reset password email.
         msg = Message("Reset Password", sender=app.config["MAIL_USERNAME"], recipients=[
